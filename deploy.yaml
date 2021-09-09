@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html
+data:
+  index-file: <h1>Hello from NGINX</h1>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-dev
+  name: nginx-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-dev
+  template:
+    metadata:
+      labels:
+        app: nginx-dev
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        volumeMounts:
+        - name: index
+          mountPath: "/usr/share/nginx/html/"
+      restartPolicy: Always
+      volumes:
+        - name: index
+          configMap:
+            name: index-html
+            items:
+            - key: "index-file"
+              path: "index.html"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-dev
+  name: nginx-dev
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx-dev
+  type: ClusterIP
+---
