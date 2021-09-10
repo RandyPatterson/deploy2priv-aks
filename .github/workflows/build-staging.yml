@@ -33,9 +33,9 @@ jobs:
           # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
           creds: '${{ secrets.AKS_CREDENTIALS }}'
           # Resource Group Name
-          resource-group: test-aks
+          resource-group: private-aks
           # AKS Cluster Name
-          cluster-name: test-aks
+          cluster-name: private-aks
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1.3
         with:
