@@ -44,7 +44,7 @@ metadata:
     app: nginx-dev
   name: nginx-dev
   annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    #service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   ports:
   - port: 80
